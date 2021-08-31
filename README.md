@@ -32,7 +32,7 @@ Instructions:
 2. Install modules or initialize venv 
 (I think they're built in...)
 3. Run gitty_generator.py to create, initialize, and insert
-4. sample data into DB.
-5. Run gitApp.py
-6. Test GET in browser or Postman
-7. Test POST in Postman or similar
+   sample data into DB.
+4. Run gitApp.py
+5. Test GET in browser or Postman
+6. Test POST in Postman or similar
