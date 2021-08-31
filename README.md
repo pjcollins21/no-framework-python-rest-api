@@ -1,6 +1,8 @@
 No Framework REST api in Python 3
-@Patrick Collins
-30-Aug-2021
+Content tags: pure python rest api, python only rest api,
+python rest api no flask, python rest api no framework
+Author@Patrick Collins
+Date: 30-Aug-2021
 
 Tasked to create a no-framework API for an employment
 opportunity. I've spent a good deal of my free time in
