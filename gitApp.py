@@ -5,11 +5,11 @@ import json
 
 class Guitar():
     def __init__(self, mfr, mdl, gtype, puc, color):
-        self.gId = None
+        self.gId = None  # We're auto-incrementing this
         self.mfr = mfr
         self.mdl = mdl
         self.gtype = gtype
-        self.puc = puc
+        self.puc = puc  # pickup configuration i.e.: 'HH' or 'HSS'
         self.color = color
 
 class GittyHandler(BaseHTTPRequestHandler):
