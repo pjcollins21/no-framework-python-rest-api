@@ -6,16 +6,15 @@ import json
 class Guitar():
     def __init__(self, mfr, mdl, gtype, puc, color):
         self.gId = None  # We're auto-incrementing this
-        self.mfr = mfr
-        self.mdl = mdl
-        self.gtype = gtype
-        self.puc = puc  # pickup configuration i.e.: 'HH' or 'HSS'
-        self.color = color
+        self.mfr = mfr  # manufactuer: 'Gibson'
+        self.mdl = mdl  # model: 'SG'
+        self.gtype = gtype  # guitar type: 'electric'
+        self.puc = puc  # pickup configuration: 'HH'
+        self.color = color  # i.e. 'ebony'
 
 class GittyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path.endswith("/all"):
-            print("DEBUG - hit method!")
             self.send_response(200)
             self.send_header('content_type', 'application/json')
             self.end_headers()
@@ -24,11 +23,9 @@ class GittyHandler(BaseHTTPRequestHandler):
             query = "SELECT * FROM guitars"
             result = cursor.execute(query)
             rows = result.fetchall()
-            print("DEBUG - rows: {}".format(rows))
             items = []
             for row in rows:
                 lr = list(row)
-                print("DEBUG - listrow:{}".format(lr))
                 gitty = Guitar(*lr)
                 items.append({"gId": gitty.gId, "mfr": gitty.mfr,
                               "mdl": gitty.mdl, "gtype": gitty.gtype,
