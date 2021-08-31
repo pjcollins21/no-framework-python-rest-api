@@ -4,18 +4,17 @@ import sqlite3
 import json
 
 class Guitar():
-    def __init__(self, mfr, mdl, gtype, puc, color):
-        self.gId = None
-        self.mfr = mfr
-        self.mdl = mdl
-        self.gtype = gtype
-        self.puc = puc
-        self.color = color
+    def __init__(self, _id, mfr, mdl, gtype, puc, color):
+        self.id = _id  # We're auto-incrementing this
+        self.mfr = mfr  # manufactuer: 'Gibson'
+        self.mdl = mdl  # model: 'SG'
+        self.gtype = gtype  # guitar type: 'electric'
+        self.puc = puc  # pickup configuration: 'HH'
+        self.color = color  # i.e. 'ebony'
 
 class GittyHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path.endswith("/all"):
-            print("DEBUG - hit method!")
             self.send_response(200)
             self.send_header('content_type', 'application/json')
             self.end_headers()
@@ -24,13 +23,11 @@ class GittyHandler(BaseHTTPRequestHandler):
             query = "SELECT * FROM guitars"
             result = cursor.execute(query)
             rows = result.fetchall()
-            print("DEBUG - rows: {}".format(rows))
             items = []
             for row in rows:
                 lr = list(row)
-                print("DEBUG - listrow:{}".format(lr))
                 gitty = Guitar(*lr)
-                items.append({"gId": gitty.gId, "mfr": gitty.mfr,
+                items.append({"id": gitty.id, "mfr": gitty.mfr,
                               "mdl": gitty.mdl, "gtype": gitty.gtype,
                               "puc": gitty.puc, "color": gitty.color})
             for item in items:
@@ -47,8 +44,8 @@ class GittyHandler(BaseHTTPRequestHandler):
                 try:
                     conn = sqlite3.connect('gitty.db')
                     cursor = conn.cursor()    
-                    query = "INSERT INTO guitars (mfr, mdl, gtype, puc, color) VALUES (?, ?, ?, ?, ?)"
-                    cursor.execute(query, (gitty.mfr, gitty.mdl, gitty.gtype, gitty.puc, gitty.color))
+                    query = "INSERT INTO guitars VALUES (NULL, ?, ?, ?, ?, ?)"
+                    cursor.execute(query, (gitty.mfr, gitty.mdl, gitty.gtype, gitty.puc, gitty.color,))
                     conn.commit()
                     self.send_response(201)
                     self.send_header('content-type', 'application/json')
